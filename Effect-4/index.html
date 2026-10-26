@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script defer src="main.js"></script>
+</head>
+<body>
+    <!-- Filtri effetto inchiostro: fuori da #swup, così Swup non li rimuove tra una pagina e l'altra -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <defs>
+            <!-- grande: titoli 60px+ -->
+            <filter id="ink-lg" x="-10%" y="-40%" width="120%" height="180%" color-interpolation-filters="sRGB">
+                <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="4" result="n"/>
+                <feDisplacementMap in="SourceGraphic" in2="n" scale="6" xChannelSelector="R" yChannelSelector="G" result="d"/>
+                <feGaussianBlur in="d" stdDeviation="0.6" result="b"/>
+                <feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"/>
+            </filter>
+            <!-- medio: testo contatti 36px -->
+            <filter id="ink-md" x="-10%" y="-40%" width="120%" height="180%" color-interpolation-filters="sRGB">
+                <feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="3" seed="4" result="n"/>
+                <feDisplacementMap in="SourceGraphic" in2="n" scale="2" xChannelSelector="R" yChannelSelector="G" result="d"/>
+                <feGaussianBlur in="d" stdDeviation="0.45" result="b"/>
+                <feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"/>
+            </filter>
+        </defs>
+    </svg>
+    <main id="swup">
+        <div class="page-a">
+            <div class="box col-1">
+                <h1>Andrea Catanzaro</h1>
+                <div class="row">
+                    <div class="text">
+                        26 years old <br>
+                        based in palermo
+                    </div>
+                    <a href="contact.html" class="text align-self-end">
+                        contacts →
+                    </a>
+                </div>
+            </div>
+            <div class="box col-2">
+                <img src="image.jpg" alt="">
+            </div>
+            <div class="box col-3">
+                <div class="text-heading">
+                    <span class="serif">Graphic Designer &</span>
+                    front-end developer
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

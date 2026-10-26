@@ -1,0 +1,253 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: crosshair;
+}
+
+body {
+    height: 100svh;
+    width: 100%;
+    overflow: hidden;
+    font-family: Inter;
+    background: #191919;
+    background: linear-gradient(145deg, #191919 0%, #001543 140%);
+    color: #D6D6D6;
+    font-size: .875rem;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.contacts-stack {
+    flex: 0.75;
+    display: flex;
+    justify-content: space-between;
+}
+
+.naming {
+    flex: 0.25;
+    height: fit-content;
+}
+
+h1 {
+    font-size: .875rem;
+    font-weight: 500;
+    letter-spacing: -0.05em;
+}
+
+a {
+    text-decoration: none;
+    color: #D6D6D6;
+}
+
+.contacts-stack .column {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.column-links {
+    display: flex;
+    gap: 4px;
+}
+
+.column {
+    * {
+        padding-left: 20px;
+    }
+    .head {
+        margin-bottom: 6px;
+        padding-left: 0;
+    }
+}
+
+/* nascosti finché GSAP non li mostra: evita il flash del testo prima dell'animazione */
+.text-title,
+.text-body,
+.text-medium {
+    visibility: hidden;
+}
+
+p.text-title {
+    font-size: clamp(1.75rem, 5.6vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+}
+
+.wrapper-page-index .text-title{
+    margin-top: 17.5%;
+}
+
+.text-medium {
+    font-size: clamp(1.25rem, 3.4vw, 2.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+}
+
+.wrapper-page-about {
+    display: flex;
+    margin-top: 10%;
+}
+
+.col-3 {
+    flex: .25;
+}
+
+.col-9 {
+    flex: .75;
+}
+
+.wrapper-page-about .text-medium {
+    margin-bottom: 2rem;
+}
+
+/* ---------- Immagine con mosaico di pixel ---------- */
+.image-wrap {
+    position: relative;
+    overflow: hidden;
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: auto;
+    will-change: transform;
+}
+
+.image-mask {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    grid-template-rows: repeat(16, 1fr);
+
+    i {
+        display: block;
+        background-image: var(--img);
+        background-repeat: no-repeat;
+        background-size: 2400% 1600%;   /* = colonne × 100%, righe × 100%: ogni cella mostra la sua parte */
+        will-change: transform, opacity;
+    }
+}
+
+/* ---------- Cursore ---------- */
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 101;
+    opacity: 0;
+    pointer-events: none;
+    width: .75rem;
+    height: 0.75rem;
+    border: .5px solid #fff;
+    transition: width cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s,
+                height cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+}
+
+body:has(a:hover) .cursor {
+    width: 2rem;
+    height: 2rem;
+    mix-blend-mode: difference;
+}
+
+@media (pointer: coarse) {
+    .cursor { display: none; }
+}
+
+/* ---------- Transizione a pixel ---------- */
+.wrapper-pixel {
+    width: 100%;
+    height: 100svh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    pointer-events: none;
+    display: grid;
+
+    .square {
+        background-color: #88abf5;
+        opacity: 0;
+        will-change: opacity;
+    }
+
+    /* due tonalità in più: la griglia ha profondità, non è un blocco piatto */
+    .square:nth-child(3n) { background-color: #6e94ea; }
+    .square:nth-child(5n) { background-color: #a9c2fa; }
+}
+
+
+/* ---------- Responsive: la navbar va su due righe ---------- */
+@media (max-width: 960px) {
+    body {
+        height: auto;
+        min-height: 100svh;
+        overflow-y: auto;
+        padding: 12px;
+    }
+
+    /* .contacts-stack sparisce come box: le sue colonne diventano celle della griglia della nav */
+    nav {
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        justify-content: space-between;
+        align-items: start;
+        row-gap: 2.5rem;
+    }
+
+    .contacts-stack {
+        display: contents;
+    }
+
+    /* riga 1: Andrea Studio a sinistra, Represented by all'estremità opposta */
+    .naming {
+        grid-column: 1;
+        grid-row: 1;
+        flex: none;
+    }
+
+    .contacts-stack .column:first-child {
+        grid-column: 2 / 4;
+        grid-row: 1;
+        justify-self: end;
+    }
+
+    /* riga 2: Address, Follow e i link, una colonna ciascuno (si piazzano da sole) */
+    .column-links {
+        justify-self: end;
+    }
+
+    .column * {
+        padding-left: 0;
+    }
+
+    /* pagine */
+    .wrapper-page-index .text-title {
+        margin-top: 3rem;
+    }
+
+    .wrapper-page-about {
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 3rem;
+    }
+
+    .col-3,
+    .col-9 {
+        flex: none;
+    }
+}
